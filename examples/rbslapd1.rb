@@ -18,7 +18,7 @@ class HashOperation < LDAP::Server::Operation
   end
 
   def search(basedn, scope, deref, filter)
-    basedn.downcase!
+    basedn = basedn.downcase
 
     case scope
     when LDAP::Server::BaseObject
@@ -41,18 +41,19 @@ class HashOperation < LDAP::Server::Operation
   end
 
   def add(dn, av)
-    dn.downcase!
+    dn = dn.downcase
     raise LDAP::ResultError::EntryAlreadyExists if @hash[dn]
     @hash[dn] = av
   end
 
   def del(dn)
-    dn.downcase!
+    dn = dn.downcase
     raise LDAP::ResultError::NoSuchObject unless @hash.has_key?(dn)
     @hash.delete(dn)
   end
 
   def modify(dn, ops)
+    dn = dn.downcase
     entry = @hash[dn]
     raise LDAP::ResultError::NoSuchObject unless entry
     ops.each do |attr, vals|
