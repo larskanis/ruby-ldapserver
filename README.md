@@ -23,42 +23,49 @@ The request router is a simple mapping of potentially parameterized routes (DNs)
 ```ruby
 params = {
   # Bind to address (cannot be combined with socket)
-  :bindaddr => '127.0.0.1', # defaults to 0.0.0.0
-  :port => 1389,
-  
+  bindaddr: '127.0.0.1', # defaults to 0.0.0.0
+  port: 1389,
+
   # Bind to socket (cannot be combined with address)
-  :socket => '/tmp/ldap.sock',
-  
+  socket: '/tmp/ldap.sock',
+
   # Drop process and socket privileges to user and/or group (cannot be combined with uid/gid)
-  :user => 'ldap',
-  :group => 'ldap',
-  
+  user: 'ldap',
+  group: 'ldap',
+
   # Drop process and socket privileges to UID and/or GID (cannot be combined with user/group)
-  :uid => 1000,
-  :gid => 1000,
-  
+  uid: 1000,
+  gid: 1000,
+
   # TCP_NODELAY option
-  :nodelay => true,
-  
+  nodelay: true,
+
   # Socket backlog
-  :listen => 10,
-  
+  listen: 10,
+
   # SSL/TLS
-  :ssl_key_file => 'key.pem',
-  :ssl_cert_file => 'cert.pem',
-  :ssl_on_connect => true,
-  
+  ssl_key_file: 'key.pem',
+  ssl_cert_file: 'cert.pem',
+  ssl_on_connect: true,
+
   # Request router (cannot be combined with legacy operation)
-  :router => MyAppRouter,
-  
+  router: MyAppRouter,
+
   # Legacy Operation class (cannot be combined with request router)
-  :operation_class => MyAppOperation,
-  :operation_args => ['my', 'arguments'],
-  
+  operation_class: MyAppOperation,
+  operation_args: ['my', 'arguments'],
+
   # Schema
-  :schema => my_schema,
-  :namingContexts => ['dc=example,dc=com']
+  schema: my_schema,
+  namingContexts: ['dc=example,dc=com'],
+
+  # Limit number of attribute values in query results
+  # https://learn.microsoft.com/en-us/previous-versions/windows/desktop/ldap/searching-using-range-retrieval
+  attribute_range_limit: 1500,
 }
+
+serv = LDAP::Server.new(params)
+serv.run_tcpserver
 ```
 
 ## Libraries
