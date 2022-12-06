@@ -6,6 +6,8 @@
 * Add support for listening on UNIX domain sockets.
   Use `LDAP::Server.new(socket: '/tmp/server.sock')`
 * Add LDAP::Server::DN to work with LDAP distinguished names
+* Add CI on Github
+* Use net-ldap for tests instead of unmaintained ruby-ldap.
 
 
 ## 0.5.3 / 2015-08-16
