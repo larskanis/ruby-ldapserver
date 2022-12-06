@@ -80,7 +80,7 @@ class DirOperation < LDAP::Server::Operation
 
   def search(basedn, scope, deref, filter)
     $debug << "Search: basedn=#{basedn.inspect}, scope=#{scope.inspect}, deref=#{deref.inspect}, filter=#{filter.inspect}\n" if $debug
-    basedn.downcase!
+    basedn = basedn.downcase
 
     case scope
     when LDAP::Server::BaseObject
@@ -115,7 +115,7 @@ class DirOperation < LDAP::Server::Operation
     # FIXME: normalize the DN and check it's below our root DN
     # FIXME: validate that a superior object exists
     # FIXME: validate that entry contains the RDN attribute (yuk)
-    dn.downcase!
+    dn = dn.downcase
     @dir.lock do
       @dir.update
       raise LDAP::ResultError::EntryAlreadyExists if @dir.data[dn]
@@ -125,7 +125,7 @@ class DirOperation < LDAP::Server::Operation
   end
 
   def del(dn)
-    dn.downcase!
+    dn = dn.downcase
     @dir.lock do
       @dir.update
       raise LDAP::ResultError::NoSuchObject unless @dir.data.has_key?(dn)
@@ -135,7 +135,7 @@ class DirOperation < LDAP::Server::Operation
   end
 
   def modify(dn, ops)
-    dn.downcase!
+    dn = dn.downcase
     @dir.lock do
       @dir.update
       entry = @dir.data[dn]
