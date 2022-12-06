@@ -207,23 +207,11 @@ class Server
     end
 
     def each(&block)
-      @dname.each do |pair|
-        if block_given?
-          block.call pair
-        else
-          yield pair
-        end
-      end
+      @dname.each(&block)
     end
 
     def reverse_each(&block)
-      @dname.reverse_each do |pair|
-        if block_given?
-          block.call pair
-        else
-          yield pair
-        end
-      end
+      @dname.reverse_each(&block)
     end
 
   end
